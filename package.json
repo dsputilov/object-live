@@ -1,0 +1,38 @@
+{
+  "name": "observable-object",
+  "version": "1.0.1",
+  "description": "Create observable object. You can work with it as with a regular hash, while using subscriptions to the events of adding an element, changing and deleting",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsputilov/ObservableObject.git"
+  },
+  "keywords": [
+    "observable",
+    "watch",
+    "object",
+    "hash",
+    "array",
+    "events",
+    "tracking",
+    "properties"
+  ],
+  "author": "Dmitrii Putilov",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/dsputilov/ObservableObject/issues"
+  },
+  "homepage": "https://github.com/dsputilov/ObservableObject#readme",
+  "dependencies": {
+    "inum": "^1.0.2",
+    "objectutils-propertybypath": "^1.0.2"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "jest": "^29.4.3"
+  }
+}
