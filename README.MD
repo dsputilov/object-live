@@ -4,13 +4,19 @@ You can work with it as with a regular hash, while using subscriptions to the ev
 
 Usage:
 
-Import library
+# Install
 
-    import State from "ObservableObject";
+    npm -i 
 
-Create state machine
+Import library in your code:
 
-    const obj = new ObservableObject();
+    import ObjectLive from "object-live";
+
+# Create object
+
+Create new observable object:
+
+    const obj = new ObjectLive();
 
 Now `obj` has observable property `data`, you can set any object to it
 
@@ -24,12 +30,18 @@ Example:
         }
     };
 
-And subscribe to some events.
+or create with initial data:
+
+    const obj2 = new ObjectLive({myanydata: {foo: 'bar'}});
+
+# Subscribe to some events.
+
 For subscription, you can specify the path to the end property, 
 Examples:
 
     obj.addEventListener('change', 'animals.cat.age', (res) => {
-        console.log(res);   // res contains properties: oldValue, newValue;
+        console.log('old value:', res.oldValue);   // res contains properties: 'oldValue' and 'newValue'. Use it to catch changes
+        console.log('new value:', res.newValue);
     });
     obj.addEventListener('change', 'animals.dog.name', console.log);
 
@@ -53,4 +65,6 @@ You can catch `delete` event:
     obj.addEventListener('delete', /^animals\.(.*)/, console.log);
     delete obj.data.animals.monkey;
 
-It's easy to use and very fast, you can create objects containing 10k+ trackable properties and not worry about performance. Enjoy)
+# Enjoy
+
+It's easy to use and very fast, you can create objects containing 10k+ trackable properties and not worry about performance

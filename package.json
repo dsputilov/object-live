@@ -1,5 +1,5 @@
 {
-  "name": "observable-object",
+  "name": "object-live",
   "version": "1.0.1",
   "description": "Create observable object. You can work with it as with a regular hash, while using subscriptions to the events of adding an element, changing and deleting",
   "main": "index.js",
@@ -12,14 +12,20 @@
     "url": "git+https://github.com/dsputilov/ObservableObject.git"
   },
   "keywords": [
+    "proxy",
+    "bind",
     "observable",
+    "observe",
+    "observer",
     "watch",
     "object",
     "hash",
     "array",
     "events",
-    "tracking",
-    "properties"
+    "track",
+    "properties",
+    "property change",
+    "dynamic object"
   ],
   "author": "Dmitrii Putilov",
   "license": "Apache-2.0",
