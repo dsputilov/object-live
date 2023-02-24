@@ -6,7 +6,7 @@ Usage:
 
 # Install
 
-    npm -i 
+    npm -i object-live
 
 Import library in your code:
 
