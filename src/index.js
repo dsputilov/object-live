@@ -2,7 +2,7 @@ import Dispatcher from './Dispatcher.js';
 import inum from "inum";
 import {setPropertyByPath} from "objectutils-propertybypath";
 
-const ObservableObject = (() => {
+const ObjectLive = (() => {
 	let ProxyHandler = class ProxyHandler {
 		constructor(owner, name) {
 			this.owner = owner;
@@ -10,7 +10,7 @@ const ObservableObject = (() => {
 		}
 
 		set(obj, p, newValue) {
-			//console.log(`%c[ObservableObject] set[${this.name}]:`, 'background:green;', this, obj, p, newValue);
+			//console.log(`%c[ObjectLive] set[${this.name}]:`, 'background:green;', this, obj, p, newValue);
 			let extra;
 			if (newValue && newValue['_RP_MODEL_']) {
 				extra = newValue.extra;
@@ -26,7 +26,7 @@ const ObservableObject = (() => {
 				extra: extra
 			});
 			obj[p] = newValue;
-			//console.log('[ObservableObject] set new Value:', newValue, 'old:', oldValue);
+			//console.log('[ObjectLive] set new Value:', newValue, 'old:', oldValue);
 			if (newValue !== oldValue) {
 				this.owner.dispatchEvent('change', fullPath, {
 					oldValue: oldValue,
@@ -39,7 +39,7 @@ const ObservableObject = (() => {
 		}
 
 		get(o, p) {
-			//console.log('[ObservableObject] get:', o, p);
+			//console.log('[ObjectLive] get:', o, p);
 			return o[p];
 		}
 
@@ -49,7 +49,7 @@ const ObservableObject = (() => {
 		}
 
 		setRecursive(p, v) {
-			//console.log('[ObservableObject] set recursive');
+			//console.log('[ObjectLive] set recursive');
 			//check for falsy values
 			if (v && v.constructor) {
 				if (v.constructor === Object) {
@@ -73,7 +73,7 @@ const ObservableObject = (() => {
 		}
 	};
 
-	return class ObservableObject {
+	return class ObjectLive {
 		#listeners = {};
 		#value;
 
@@ -110,7 +110,7 @@ const ObservableObject = (() => {
 
 		bridgeChanges(path, remoteObj, remotePath) {
 			let changeId = inum();
-			//console.log('%c[ObservableObject] Bridged:', 'background:magenta;', this, path, remoteObj, remotePath);
+			//console.log('%c[ObjectLive] Bridged:', 'background:magenta;', this, path, remoteObj, remotePath);
 
 			//if changed our object we will change remote
 			this.addEventListener('change', new RegExp('^' + path + '(\..*)?'), cfg => {
@@ -119,7 +119,7 @@ const ObservableObject = (() => {
 				}
 				const relativePath = cfg.path.replace(new RegExp('^' + path), '');
 				const newPath = remotePath + relativePath;
-				//console.log('[ObservableObject] our change, set remote:', cfg);
+				//console.log('[ObjectLive] our change, set remote:', cfg);
 				setPropertyByPath(remoteObj.data, newPath, {
 					_RP_MODEL_: true,
 					value: cfg.newValue,
@@ -134,7 +134,7 @@ const ObservableObject = (() => {
 				}
 				const relativePath = cfg.path.replace(new RegExp('^' + remotePath), '');
 				const newPath = path + relativePath;
-				//console.log('[ObservableObject] remote change, set our:', cfg);
+				//console.log('[ObjectLive] remote change, set our:', cfg);
 				setPropertyByPath(this.data, newPath, {
 					_RP_MODEL_: true,
 					value: cfg.newValue,
@@ -145,4 +145,4 @@ const ObservableObject = (() => {
 	};
 })();
 
-export default ObservableObject;
+export default ObjectLive;

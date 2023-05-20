@@ -1,7 +1,7 @@
-import ObservableObject from "../src/index.js";
+import ObjectLive from "../src/index.js";
 
 it("addEventListener('change'), change leaf in tree object, subscribe by regexp", function () {
-	let a = new ObservableObject({user: {name: 'foo'}});
+	let a = new ObjectLive({user: {name: 'foo'}});
 	let checksum = '';
 	a.addEventListener('change', /^user\.name$/, function (cfg) {
 		checksum += '1';
@@ -12,7 +12,7 @@ it("addEventListener('change'), change leaf in tree object, subscribe by regexp"
 
 
 it("addEventListener('change'), change leaf in tree object, subscribe by string path ", function () {
-	let a = new ObservableObject({user: {name: 'foo'}});
+	let a = new ObjectLive({user: {name: 'foo'}});
 	let checksum = '';
 	a.addEventListener('change', "user.name", function (cfg) {
 		checksum += '1';
@@ -22,7 +22,7 @@ it("addEventListener('change'), change leaf in tree object, subscribe by string 
 });
 
 it("addEventListener('change'), change root node in tree object", function () {
-	let a = new ObservableObject({user: {name: 'foo'}});
+	let a = new ObjectLive({user: {name: 'foo'}});
 	let checksum = '';
 	a.addEventListener('change', /^user/, function (cfg) {
 		checksum += '1';
@@ -32,7 +32,7 @@ it("addEventListener('change'), change root node in tree object", function () {
 });
 
 it("addEventListener('set'), add new property, catch property", function () {
-	let a = new ObservableObject({user: {name: 'foo'}});
+	let a = new ObjectLive({user: {name: 'foo'}});
 	let checksum = '';
 	a.addEventListener('set', /^user\.balance/, function (cfg) {
 		checksum += '1';
@@ -42,7 +42,7 @@ it("addEventListener('set'), add new property, catch property", function () {
 });
 
 it("addEventListener('change'), add new property, change and catch subproperty", function () {
-	let a = new ObservableObject({user: {name: 'foo'}});
+	let a = new ObjectLive({user: {name: 'foo'}});
 	let checksum = '';
 	a.addEventListener('change', /^user\.account\.balance/, function (cfg) {
 		checksum += cfg.oldValue + '' + cfg.newValue;
@@ -53,7 +53,7 @@ it("addEventListener('change'), add new property, change and catch subproperty",
 });
 
 it("addEventListener('set'), push value in array, catch new value", function () {
-	let a = new ObservableObject({user: {names: ['foo']}});
+	let a = new ObjectLive({user: {names: ['foo']}});
 	let checksum = '';
 	a.addEventListener('set', /^user\.names\.1/, function (cfg) {
 		checksum += cfg.newValue;
@@ -63,7 +63,7 @@ it("addEventListener('set'), push value in array, catch new value", function () 
 });
 
 it.skip("addEventListener('set'), push value in array, catch changes of array length", function () {
-	let a = new ObservableObject({user: {names: ['hello']}});
+	let a = new ObjectLive({user: {names: ['hello']}});
 	let checksum = '';
 	a.addEventListener('set', /^user\.names\.length/, function (cfg) {
 		//console.log(cfg);
@@ -75,8 +75,8 @@ it.skip("addEventListener('set'), push value in array, catch changes of array le
 	expect(checksum).toBe('1223');
 });
 
-it("create emptyObservableObject, addEventListener('change') and catch new value", function () {
-	let a = new ObservableObject();
+it("create emptyObjectLive, addEventListener('change') and catch new value", function () {
+	let a = new ObjectLive();
 	let checksum = '';
 	a.addEventListener('set', /^user/, function (cfg) {
 		checksum += cfg.oldValue + '' + cfg.newValue;
