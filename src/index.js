@@ -113,12 +113,12 @@ const ObjectLive = (() => {
 			//console.log('%c[ObjectLive] Bridged:', 'background:magenta;', this, path, remoteObj, remotePath);
 
 			//if changed our object we will change remote
-			this.addEventListener('change', new RegExp('^' + path + '(\..*)?'), cfg => {
+			this.addEventListener('change', new RegExp('^' + path + '(' + (path ? '\.' :'' ) + '.*)?'), cfg => {
 				if (cfg.extra && cfg.extra.initiator === changeId) {
 					return;
 				}
 				const relativePath = cfg.path.replace(new RegExp('^' + path), '');
-				const newPath = remotePath + relativePath;
+				const newPath = remotePath + (path ? '' : '.') + relativePath;
 				//console.log('[ObjectLive] our change, set remote:', cfg);
 				setPropertyByPath(remoteObj.data, newPath, {
 					_RP_MODEL_: true,
@@ -128,12 +128,12 @@ const ObjectLive = (() => {
 			});
 
 			//if changed remote object we will change our
-			remoteObj.addEventListener('change', new RegExp('^' + remotePath + '(\..*)?'), cfg => {
+			remoteObj.addEventListener('change', new RegExp('^' + remotePath + '(' + (path ? '\.' :'' ) + '.*)?'), cfg => {
 				if (cfg.extra && cfg.extra.initiator === changeId) {
 					return;
 				}
 				const relativePath = cfg.path.replace(new RegExp('^' + remotePath), '');
-				const newPath = path + relativePath;
+				const newPath = path + (remotePath ? '' : '.') + relativePath;
 				//console.log('[ObjectLive] remote change, set our:', cfg);
 				setPropertyByPath(this.data, newPath, {
 					_RP_MODEL_: true,

@@ -1,6 +1,6 @@
 {
   "name": "object-live",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Create observable object. You can work with it as with a regular hash, while using subscriptions to the events of adding an element, changing and deleting",
   "main": "./src/index.js",
   "scripts": {
